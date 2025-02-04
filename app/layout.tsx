@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Moderustic } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme/theme-provider'
+import { Navbar } from '@/components/navbar/navbar'
 
 const moderustic = Moderustic({
   weight: ['300', '400', '500', '600', '700', '800'],
@@ -21,7 +22,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
+    <html
+      lang='en'
+      suppressHydrationWarning
+    >
       <body className={`${moderustic.className} antialiased`}>
         <ThemeProvider
           attribute='class'
@@ -29,6 +33,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Navbar />
           {children}
         </ThemeProvider>
       </body>
