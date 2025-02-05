@@ -1,10 +1,10 @@
 import { buttonVariants } from '../ui/button'
 
-import { GithubLogo } from '../icons/icons'
-import { GetStarted } from './get-started'
 import { NavbarItem } from './navbar-item'
-import { ThemeToggle } from '../theme/theme-toggle'
+import { GetStarted } from './get-started'
+import { GithubLogo } from '../icons/icons'
 import { ExternalLink } from '../ui/external-link'
+import { ThemeToggle } from '../theme/theme-toggle'
 
 export function NavbarLinks() {
   return (

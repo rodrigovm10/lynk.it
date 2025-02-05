@@ -1,8 +1,9 @@
-import { GithubLogo } from '@/components/icons/icons'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { ExternalLink } from '@/components/ui/external-link'
-import { Link as LinkIcon } from 'lucide-react'
 import Link from 'next/link'
+import { Link as LinkIcon } from 'lucide-react'
+
+import { GithubLogo } from '@/components/icons/icons'
+import { ExternalLink } from '@/components/ui/external-link'
+import { Button, buttonVariants } from '@/components/ui/button'
 
 export function HeroActions() {
   return (
@@ -13,7 +14,7 @@ export function HeroActions() {
         size='lg'
         className='font-semibold'
       >
-        <Link href='/auth'>
+        <Link href='/login'>
           <LinkIcon />
           <span>Create link</span>
         </Link>

@@ -1,8 +1,9 @@
+import './globals.css'
 import type { Metadata } from 'next'
 import { Moderustic } from 'next/font/google'
-import './globals.css'
-import { ThemeProvider } from '@/components/theme/theme-provider'
+
 import { Navbar } from '@/components/navbar/navbar'
+import { ThemeProvider } from '@/components/theme/theme-provider'
 
 const moderustic = Moderustic({
   weight: ['300', '400', '500', '600', '700', '800'],
