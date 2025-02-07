@@ -9,7 +9,7 @@ export async function Navbar() {
   const { data, error } = await supabase.auth.getUser()
 
   return (
-    <nav className={cn('flex justify-between items-center px-4 py-2')}>
+    <nav className={cn('flex justify-between items-center w-full py-2 backdrop-blur-md container')}>
       <Logo />
       <NavbarLinks user={data.user} />
     </nav>

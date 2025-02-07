@@ -8,7 +8,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <>
       <Navbar />
-      <main className='px-4 py-2'>{children}</main>
+      <main className='container my-4'>{children}</main>
     </>
   )
 }

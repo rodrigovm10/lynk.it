@@ -4,8 +4,8 @@ import { NavbarItem } from './navbar-item'
 
 export function Navbar() {
   return (
-    <nav className='px-4 pt-3 border-b-[1px]'>
-      <ul className='flex gap-6'>
+    <nav className='pt-3 border-b-[1px] w-full'>
+      <ul className='flex gap-6 container'>
         <NavbarItem path='links'>
           <Link
             href='/dashboard/links'

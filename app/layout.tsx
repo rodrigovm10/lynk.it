@@ -27,7 +27,7 @@ export default function RootLayout({
       lang='en'
       suppressHydrationWarning
     >
-      <body className={`${moderustic.className} antialiased`}>
+      <body className={`${moderustic.className} antialiased w-full`}>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
