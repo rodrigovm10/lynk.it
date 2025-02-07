@@ -3,6 +3,7 @@
 import { signOut } from '@/actions/auth'
 import { redirect } from 'next/navigation'
 import { DropdownMenuItem } from '../ui/dropdown-menu'
+import { LogOutIcon } from 'lucide-react'
 
 export function LogOut() {
   const handleSignOut = async () => {
@@ -10,5 +11,10 @@ export function LogOut() {
     redirect('/')
   }
 
-  return <DropdownMenuItem onClick={handleSignOut}>Log Out</DropdownMenuItem>
+  return (
+    <DropdownMenuItem onClick={handleSignOut}>
+      <LogOutIcon />
+      <span>Log Out</span>
+    </DropdownMenuItem>
+  )
 }

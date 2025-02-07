@@ -8,17 +8,18 @@ import { Button, buttonVariants } from '@/components/ui/button'
 export function HeroActions() {
   return (
     <section className='flex gap-x-5 mt-8'>
-      <Button
-        asChild
-        variant='outline'
-        size='lg'
-        className='font-semibold'
+      <Link
+        href='/login'
+        className={buttonVariants({
+          variant: 'outline',
+          size: 'lg',
+          className: 'font-semibold',
+        })}
       >
-        <Link href='/login'>
-          <LinkIcon />
-          <span>Create link</span>
-        </Link>
-      </Button>
+        <LinkIcon />
+        <span>Create link</span>
+      </Link>
+
       <ExternalLink
         href='https://github.com/rodrigovm10/lynk.it'
         className={buttonVariants({

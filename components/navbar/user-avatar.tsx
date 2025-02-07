@@ -11,6 +11,8 @@ import {
 import { Button } from '../ui/button'
 import { LogOut } from '../login/log-out'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { House, LayoutDashboard, Settings } from 'lucide-react'
+import Link from 'next/link'
 
 interface UserAvatarProps {
   user: User | null
@@ -41,6 +43,18 @@ export function UserAvatar({ user }: UserAvatarProps) {
           <span className='text-xs text-foreground font-normal'>{user?.user_metadata.email}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <House />
+          <Link href='/'>Home</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <LayoutDashboard />
+          <Link href='/dashboard/links'>Links</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Settings />
+          <Link href='/dashboard/settings'>Settings</Link>
+        </DropdownMenuItem>
         <LogOut />
       </DropdownMenuContent>
     </DropdownMenu>

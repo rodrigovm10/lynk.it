@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import { Home } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { TypographyH1, TypographyH2, TypographyP } from '@/components/ui/typografy'
+import { cn } from '@/lib/utils'
 
 export default function NotFound() {
   return (
@@ -15,15 +16,14 @@ export default function NotFound() {
         <TypographyP className='text-base text-neutral-500 font-normal leading-10'>
           The page you're looking for doesn't exist on lynk.it
         </TypographyP>
-        <Link href='/'>
-          <Button
-            variant='outline'
-            size='lg'
-            className='py-2 w-auto'
-          >
-            <Home />
-            <span>Go back home</span>
-          </Button>
+        <Link
+          href='/'
+          className={cn(
+            buttonVariants({ variant: 'outline', size: 'lg', className: 'py-2 w-auto' })
+          )}
+        >
+          <Home />
+          <span>Go back home</span>
         </Link>
       </section>
     </div>
