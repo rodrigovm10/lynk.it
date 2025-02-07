@@ -1,12 +1,18 @@
+import { User } from '@supabase/supabase-js'
 import { buttonVariants } from '../ui/button'
 
 import { NavbarItem } from './navbar-item'
 import { GetStarted } from './get-started'
+import { UserAvatar } from './user-avatar'
 import { GithubLogo } from '../icons/icons'
-import { ExternalLink } from '../ui/external-link'
 import { ThemeToggle } from '../theme/theme-toggle'
+import { ExternalLink } from '../ui/external-link'
 
-export function NavbarLinks() {
+interface NavbarLinksProps {
+  user: User | null
+}
+
+export function NavbarLinks({ user }: NavbarLinksProps) {
   return (
     <ul className='flex gap-x-2 items-center'>
       <NavbarItem>
@@ -23,9 +29,7 @@ export function NavbarLinks() {
       <NavbarItem>
         <ThemeToggle />
       </NavbarItem>
-      <NavbarItem>
-        <GetStarted />
-      </NavbarItem>
+      <NavbarItem>{!user ? <GetStarted /> : <UserAvatar user={user} />}</NavbarItem>
     </ul>
   )
 }

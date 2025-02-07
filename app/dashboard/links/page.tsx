@@ -5,7 +5,7 @@ import { Plus, Search, Tag } from 'lucide-react'
 export default function Links() {
   return (
     <>
-      <section className='flex justify-between gap-6'>
+      <section className='flex justify-between gap-6 mt-4'>
         <div className='relative'>
           <Search
             className='absolute z-1 left-2 top-3'

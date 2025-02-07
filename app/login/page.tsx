@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button'
-import { GithubLogo, GoogleLogo } from '@/components/icons/icons'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import logo from '@/public/logo.png'
 import Image from 'next/image'
+
+import logo from '@/public/logo.png'
+import { SocialAuth } from '@/components/login/social-auth'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function Login() {
   return (
@@ -19,14 +19,7 @@ export default function Login() {
         <CardDescription>Log in with your favorite provider</CardDescription>
       </CardHeader>
       <CardContent className='grid gap-4'>
-        <Button variant='outline'>
-          <GoogleLogo />
-          Continue with Google{' '}
-        </Button>
-        <Button variant='outline'>
-          <GithubLogo />
-          <span>Continue with Github</span>
-        </Button>
+        <SocialAuth />
       </CardContent>
     </Card>
   )
