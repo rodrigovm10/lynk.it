@@ -19,11 +19,11 @@ export default function Links() {
         <div className='flex gap-4'>
           <Button variant='outline'>
             <Tag />
-            <span className='font-semibold'>Select tag</span>
+            <span className='hidden md:inline-block font-semibold'>Select tag</span>
           </Button>
           <Button>
             <Plus />
-            <span className='font-semibold'>Create link</span>
+            <span className='hidden md:inline-block font-semibold'>Create link</span>
           </Button>
         </div>
       </section>
