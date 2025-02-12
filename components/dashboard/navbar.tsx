@@ -1,5 +1,6 @@
-import { Link2, Settings } from 'lucide-react'
 import Link from 'next/link'
+import { Link2, Settings } from 'lucide-react'
+
 import { NavbarItem } from './navbar-item'
 
 export function Navbar() {

@@ -1,8 +1,9 @@
 'use client'
 
 import { signInWithGithub, signInWithGoogle } from '@/actions/auth'
-import { GithubLogo, GoogleLogo } from '../icons/icons'
-import { Button } from '../ui/button'
+
+import { Button } from '@/components/ui/button'
+import { GithubLogo, GoogleLogo } from '@/components/icons/icons'
 
 export function SocialAuth() {
   return (

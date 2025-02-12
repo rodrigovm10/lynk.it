@@ -1,9 +1,10 @@
 'use client'
 
 import { signOut } from '@/actions/auth'
-import { redirect } from 'next/navigation'
-import { DropdownMenuItem } from '../ui/dropdown-menu'
 import { LogOutIcon } from 'lucide-react'
+import { redirect } from 'next/navigation'
+
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 
 export function LogOut() {
   const handleSignOut = async () => {

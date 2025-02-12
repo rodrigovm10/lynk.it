@@ -1,9 +1,9 @@
 import Link from 'next/link'
+import { cn } from '@/lib/utils'
 import { Home } from 'lucide-react'
 
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { TypographyH1, TypographyH2, TypographyP } from '@/components/ui/typografy'
-import { cn } from '@/lib/utils'
 
 export default function NotFound() {
   return (

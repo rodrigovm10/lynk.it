@@ -1,4 +1,4 @@
-import { TypographyH1, TypographyP } from '../ui/typografy'
+import { TypographyH1, TypographyP } from '@/components/ui/typografy'
 
 export function Hero() {
   return (

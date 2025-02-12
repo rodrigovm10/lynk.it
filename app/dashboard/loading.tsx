@@ -1,5 +1,6 @@
-import { TypographyP } from '@/components/ui/typografy'
 import { Loader } from 'lucide-react'
+
+import { TypographyP } from '@/components/ui/typografy'
 
 export default function Loading() {
   return (

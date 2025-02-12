@@ -1,12 +1,12 @@
 import { User } from '@supabase/supabase-js'
-import { buttonVariants } from '../ui/button'
+import { buttonVariants } from '@/components/ui/button'
 
 import { NavbarItem } from './navbar-item'
 import { GetStarted } from './get-started'
 import { UserAvatar } from './user-avatar'
-import { GithubLogo } from '../icons/icons'
-import { ThemeToggle } from '../theme/theme-toggle'
-import { ExternalLink } from '../ui/external-link'
+import { GithubLogo } from '@/components/icons/icons'
+import { ExternalLink } from '@/components/ui/external-link'
+import { ThemeToggle } from '@/components/theme/theme-toggle'
 
 interface NavbarLinksProps {
   user: User | null

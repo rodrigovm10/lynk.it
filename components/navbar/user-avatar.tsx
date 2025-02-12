@@ -1,4 +1,6 @@
+import Link from 'next/link'
 import { User } from '@supabase/supabase-js'
+import { House, LayoutDashboard, Settings } from 'lucide-react'
 
 import {
   DropdownMenu,
@@ -8,11 +10,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
-import { Button } from '../ui/button'
-import { LogOut } from '../login/log-out'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { House, LayoutDashboard, Settings } from 'lucide-react'
-import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { LogOut } from '@/components/login/log-out'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 interface UserAvatarProps {
   user: User | null
