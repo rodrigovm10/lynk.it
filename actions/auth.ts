@@ -13,8 +13,6 @@ const signInWith = async (provider: Provider) => {
     options: { redirectTo: auth_callback_url },
   })
 
-  console.log(data)
-
   if (error) {
     console.error(error)
   }

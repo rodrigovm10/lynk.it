@@ -7,7 +7,6 @@ interface TagCardProps {
 }
 
 export function TagCard({ tag }: TagCardProps) {
-  console.log(tag)
   return (
     <div className='flex w-full items-center justify-between rounded-md border border-neutral-200 px-2 py-1 text-left text-sm transition-colors duration-200 hover:opacity-80 dark:border-neutral-800'>
       <button className='w-full text-start'>{tag.name} </button>

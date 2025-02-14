@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Loader, Plus, Rocket } from 'lucide-react'
+import { Plus, Rocket } from 'lucide-react'
 
 import {
   Dialog,
@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dialog'
 import { TagForm } from './tag-form'
 import { Button } from '@/components/ui/button'
+import { PendingAction } from '@/components/ui/pending-action'
 
 export function TagDialog() {
   const [open, setOpen] = useState(false)
@@ -55,8 +56,12 @@ export function TagDialog() {
                 type='submit'
                 disabled={isPending}
               >
-                {isPending ? <Loader className='animate-spin' /> : <Rocket />}
-                {isPending ? 'Creating...' : 'Create a tag'}
+                <PendingAction
+                  isPending={isPending}
+                  loadingText='Creating...'
+                  normalText='Create a tag'
+                  icon={<Rocket />}
+                />
               </Button>
             </DialogFooter>
           )}

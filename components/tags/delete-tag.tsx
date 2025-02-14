@@ -2,7 +2,7 @@
 
 import { Tag } from '@/types/tags'
 import { deleteTag } from '@/actions/tag'
-import { Loader, XIcon } from 'lucide-react'
+import { XIcon } from 'lucide-react'
 import { useDelete } from '@/hooks/tags/useDelete'
 
 import {
@@ -15,6 +15,7 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import { PendingAction } from '@/components/ui/pending-action'
 
 interface DeleteTagProps {
   tag: Tag
@@ -42,9 +43,13 @@ export function DeleteTag({ tag }: DeleteTagProps) {
           <Button
             variant='destructive'
             onClick={() => handleDelete(tag.id, tag.name)}
+            disabled={isPending}
           >
-            {isPending && <Loader className='animate-spin' />}
-            {isPending ? 'Deleting...' : 'Delete tag'}
+            <PendingAction
+              isPending={isPending}
+              loadingText='Deleting...'
+              normalText='Delete tag'
+            />
           </Button>
         </DialogFooter>
       </DialogContent>

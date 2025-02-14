@@ -24,7 +24,6 @@ export function useDelete({ entityName, deleteFunction }: UseDeleteProps) {
         })
       } catch (error) {
         toast.error('Something went wrong, please try again.')
-        console.log(error)
       }
     })
   }
