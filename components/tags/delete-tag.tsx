@@ -1,8 +1,9 @@
 'use client'
 
 import { Tag } from '@/types/tags'
-import { Loader, XIcon } from 'lucide-react'
 import { deleteTag } from '@/actions/tag'
+import { Loader, XIcon } from 'lucide-react'
+import { useDelete } from '@/hooks/tags/useDelete'
 
 import {
   Dialog,
@@ -14,35 +15,17 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { useTransition } from 'react'
-import { toast } from 'sonner'
 
 interface DeleteTagProps {
   tag: Tag
 }
 
 export function DeleteTag({ tag }: DeleteTagProps) {
-  const [isPending, startTransition] = useTransition()
+  const { isPending, handleDelete } = useDelete({
+    entityName: 'Tag',
+    deleteFunction: deleteTag,
+  })
 
-  const handleDelete = async () => {
-    startTransition(async () => {
-      try {
-        const { id, name } = tag
-        const { success, error } = await deleteTag(id)
-
-        if (!success) {
-          toast.error(error)
-          return
-        }
-        toast.success('Tag deleted successfully.', {
-          description: `The tag "${name}" has been deleted.`,
-        })
-      } catch (error) {
-        toast.error('Something went wrong, please try again.')
-        console.log(error)
-      }
-    })
-  }
   return (
     <Dialog>
       <DialogTrigger>
@@ -58,7 +41,7 @@ export function DeleteTag({ tag }: DeleteTagProps) {
         <DialogFooter>
           <Button
             variant='destructive'
-            onClick={handleDelete}
+            onClick={() => handleDelete(tag.id, tag.name)}
           >
             {isPending && <Loader className='animate-spin' />}
             {isPending ? 'Deleting...' : 'Delete tag'}
