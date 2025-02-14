@@ -1,10 +1,11 @@
 import { retrieveTags } from '@/actions/tag'
-import { SearchX, Tag } from 'lucide-react'
+import { SearchX, Tag, TagIcon } from 'lucide-react'
 
 import { TagList } from './tag-list'
 import { TagDialog } from './tag-dialog'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { NotFoundTags } from './not-found-tags'
 
 export async function SelectTag() {
   const { data: tags } = await retrieveTags()
@@ -18,8 +19,9 @@ export async function SelectTag() {
         </Button>
       </PopoverTrigger>
       <PopoverContent>
-        <p className='my-2 text-center text-sm font-medium'>My Tags</p>
-        <TagList tags={tags} />
+        <p className='my-2 text-center text-sm font-medium'>My Tags ({tags?.length})</p>
+        {(!tags || tags.length === 0) && <NotFoundTags />}
+        {tags && tags.length > 0 && <TagList tags={tags} />}
         <section className='flex justify-center gap-2 mt-4 w-full '>
           <Button
             className='w-full'

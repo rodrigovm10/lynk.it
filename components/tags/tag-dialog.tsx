@@ -27,7 +27,7 @@ export function TagDialog() {
     >
       <DialogTrigger asChild>
         <Button
-          className='w-full cursor-pointer'
+          className='w-full'
           variant='outline'
           size='sm'
         >
