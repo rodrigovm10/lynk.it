@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Moderustic } from 'next/font/google'
 
+import { Toaster } from '@/components/ui/sonner'
 import { Navbar } from '@/components/navbar/navbar'
 import { ThemeProvider } from '@/components/theme/theme-provider'
 
@@ -36,6 +37,7 @@ export default function RootLayout({
         >
           <Navbar />
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

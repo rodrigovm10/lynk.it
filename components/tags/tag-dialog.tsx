@@ -1,4 +1,7 @@
-import { Plus } from 'lucide-react'
+'use client'
+
+import { useState } from 'react'
+import { Loader, Plus, Rocket } from 'lucide-react'
 
 import {
   Dialog,
@@ -14,8 +17,13 @@ import { TagForm } from './tag-form'
 import { Button } from '@/components/ui/button'
 
 export function TagDialog() {
+  const [open, setOpen] = useState(false)
+
   return (
-    <Dialog>
+    <Dialog
+      open={open}
+      onOpenChange={setOpen}
+    >
       <DialogTrigger className='cursor-pointer'>
         <Button
           className='w-full cursor-pointer'
@@ -32,7 +40,8 @@ export function TagDialog() {
           <DialogDescription>Create a new tag to organize your links.</DialogDescription>
         </DialogHeader>
         <TagForm
-          actions={
+          onSuccess={() => setOpen(false)}
+          actions={isPending => (
             <DialogFooter>
               <DialogClose asChild>
                 <Button
@@ -42,9 +51,15 @@ export function TagDialog() {
                   Close
                 </Button>
               </DialogClose>
-              <Button type='submit'>Create Tag</Button>
+              <Button
+                type='submit'
+                disabled={isPending}
+              >
+                {isPending ? <Loader className='animate-spin' /> : <Rocket />}
+                {isPending ? 'Creating...' : 'Create a tag'}
+              </Button>
             </DialogFooter>
-          }
+          )}
         />
       </DialogContent>
     </Dialog>
