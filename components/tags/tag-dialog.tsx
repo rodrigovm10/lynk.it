@@ -24,7 +24,7 @@ export function TagDialog() {
       open={open}
       onOpenChange={setOpen}
     >
-      <DialogTrigger className='cursor-pointer'>
+      <DialogTrigger asChild>
         <Button
           className='w-full cursor-pointer'
           variant='outline'

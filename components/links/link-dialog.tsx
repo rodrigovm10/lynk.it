@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button'
 export function LinkDialog() {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button>
           <Plus />
           <span className='hidden md:inline-block font-semibold'>Create link</span>
