@@ -1,13 +1,4 @@
 'use client'
-
-import z from 'zod'
-import { toast } from 'sonner'
-import { useTransition } from 'react'
-import { TagSchema } from '@/schemas'
-import { addTag } from '@/actions/tag'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-
 import {
   Form,
   FormControl,
@@ -17,6 +8,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useTagForm } from '@/hooks/tags/useTagForm'
 
 interface TagFormProps {
   onSuccess: () => void
@@ -24,29 +16,7 @@ interface TagFormProps {
 }
 
 export function TagForm({ actions, onSuccess }: TagFormProps) {
-  const form = useForm<z.infer<typeof TagSchema>>({
-    resolver: zodResolver(TagSchema),
-  })
-  const [isPending, startTransition] = useTransition()
-
-  const handleSubmit = async (data: z.infer<typeof TagSchema>) => {
-    try {
-      const { name } = data
-
-      startTransition(async () => {
-        const { success, error } = await addTag(name)
-        if (!success) {
-          toast.error(error!)
-          return
-        }
-        onSuccess()
-        form.reset()
-        toast.success('Tag has been created.')
-      })
-    } catch (err) {
-      toast.error('Something went wrong, please try again.')
-    }
-  }
+  const { form, isPending, handleSubmit } = useTagForm(onSuccess)
 
   return (
     <Form {...form}>

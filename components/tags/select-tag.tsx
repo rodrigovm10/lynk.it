@@ -1,5 +1,5 @@
 import { retrieveTags } from '@/actions/tag'
-import { SearchX, Tag, XIcon } from 'lucide-react'
+import { SearchX, Tag } from 'lucide-react'
 
 import { TagList } from './tag-list'
 import { TagDialog } from './tag-dialog'
