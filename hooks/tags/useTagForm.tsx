@@ -10,6 +10,9 @@ import { addTag } from '@/actions/tag'
 export function useTagForm(onSuccess: () => void) {
   const form = useForm<z.infer<typeof TagSchema>>({
     resolver: zodResolver(TagSchema),
+    defaultValues: {
+      name: '',
+    },
   })
   const [isPending, startTransition] = useTransition()
 
