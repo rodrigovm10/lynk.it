@@ -12,9 +12,9 @@ export function useDelete({ entityName, deleteFunction }: UseDeleteProps) {
   const handleDelete = async (id: string, name: string) => {
     startTransition(async () => {
       try {
-        const { success, error } = await deleteFunction(id)
+        const { error } = await deleteFunction(id)
 
-        if (!success) {
+        if (error) {
           toast.error(error || `Failed to delete the ${entityName}`)
           return
         }

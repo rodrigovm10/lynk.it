@@ -1,18 +1,11 @@
 'use client'
 
 import z from 'zod'
-import { useState } from 'react'
-import { LynkSchema } from '@/schemas'
+import { useEffect, useState, useTransition } from 'react'
+import { Lynk, LynkSchema } from '@/schemas'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import {
   Form,
   FormControl,
@@ -22,46 +15,72 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent } from '@/components/ui/card'
 import { NoTagsCreated } from '@/components/tags/no-tags-created'
+import { Tag } from '@/types/tags'
+import { SelectTags } from './select-tags'
+import { XIcon } from 'lucide-react'
+import { toast } from 'sonner'
+import { addLynk } from '@/actions/lynk'
 
 interface LinkFormProps {
-  actions: React.ReactNode
+  tags: Tag[]
+  onSuccess: () => void
+  actions: (isPending: boolean) => React.ReactNode
 }
 
-const TagsAray = [
-  {
-    id: '1',
-    name: 'a',
-  },
-  {
-    id: '2',
-    name: 'b',
-  },
-  {
-    id: '3',
-    name: 'c',
-  },
-]
+export function LinkForm({ tags, actions, onSuccess }: LinkFormProps) {
+  const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+  const [isPending, startTransition] = useTransition()
 
-export function LinkForm({ actions }: LinkFormProps) {
-  const [selectedTags, setSelectedTags] = useState<typeof TagsAray>([])
-  const form = useForm<z.infer<typeof LynkSchema>>({
+  const form = useForm<Lynk>({
     resolver: zodResolver(LynkSchema),
     defaultValues: {
-      tags: ['a'],
+      link: '',
+      lynk: '',
+      description: '',
+      tags: [],
     },
   })
+  const onSubmit = (data: Lynk) => {
+    startTransition(async () => {
+      try {
+        const { success, error, data: lynk } = await addLynk(data)
 
-  const onSubmit = (data: z.infer<typeof LynkSchema>) => {
-    console.log(data)
+        if (!success) {
+          toast.error(error)
+          console.log(error)
+          return
+        }
+
+        toast.success('Lynk created successfully', { description: `Url: ${lynk?.lynk}` })
+        form.reset()
+        onSuccess()
+      } catch (error) {
+        toast.error('Something went wrong, please try again.')
+      }
+    })
   }
 
-  const handleSelectTags = (tag: string) => {
-    setSelectedTags(selectedTags => [...selectedTags, TagsAray.find(t => t.id === tag)!])
+  useEffect(() => {
+    form.setValue('tags', selectedTags)
+  }, [selectedTags])
+
+  const handleSelectTags = (tagId: string) => {
+    const tagExists = selectedTags.find(tag => tag.id === tagId)
+
+    if (!tagExists) {
+      setSelectedTags(selectedTags => [...selectedTags, tags.find(tag => tag.id === tagId)!])
+      return
+    }
+  }
+
+  const handleRemoveSelectedTag = (tagId: string) => {
+    const newTags = selectedTags.filter(tag => tag.id !== tagId)
+
+    setSelectedTags(newTags)
   }
 
   return (
@@ -90,13 +109,13 @@ export function LinkForm({ actions }: LinkFormProps) {
 
         <FormField
           control={form.control}
-          name='shortLink'
+          name='lynk'
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor='short-link'>Short link:</FormLabel>
+              <FormLabel htmlFor='lynk'>Short link:</FormLabel>
               <FormControl>
                 <Input
-                  id='short-link'
+                  id='lynk'
                   placeholder='Short link'
                   {...field}
                 />
@@ -124,30 +143,12 @@ export function LinkForm({ actions }: LinkFormProps) {
           )}
         />
 
-        <div className='space-y-1'>
-          <Label htmlFor='tags'>Add tags to your link:</Label>
-          <Select
-            onValueChange={value => {
-              handleSelectTags(value)
-            }}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder='Tag' />
-            </SelectTrigger>
-            <SelectContent>
-              {TagsAray.map(tag => (
-                <SelectItem
-                  key={tag.id}
-                  value={tag.id}
-                >
-                  {tag.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <SelectTags
+          tags={tags}
+          onSelectTags={handleSelectTags}
+        />
 
-        {TagsAray.length === 0 && <NoTagsCreated />}
+        {tags.length === 0 && <NoTagsCreated />}
         {selectedTags.length > 0 && (
           <Card>
             <CardContent className='p-0 flex justify-center h-9 items-center text-base gap-5 py-2 roun'>
@@ -157,13 +158,16 @@ export function LinkForm({ actions }: LinkFormProps) {
                   variant='secondary'
                   className='flex gap-3 items-center'
                 >
-                  {tag.name} <span className='font-thin items-start cursor-pointer'>x</span>
+                  {tag.name}
+                  <button onClick={() => handleRemoveSelectedTag(tag.id)}>
+                    <XIcon size={16} />
+                  </button>
                 </Badge>
               ))}
             </CardContent>
           </Card>
         )}
-        {actions}
+        {actions(isPending)}
       </form>
     </Form>
   )

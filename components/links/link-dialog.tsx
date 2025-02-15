@@ -1,4 +1,8 @@
-import { Plus } from 'lucide-react'
+'use client'
+
+import { useState } from 'react'
+import { Tag } from '@/types/tags'
+import { Plus, Rocket } from 'lucide-react'
 
 import {
   Dialog,
@@ -11,10 +15,20 @@ import {
 } from '@/components/ui/dialog'
 import { LinkForm } from './link-form'
 import { Button } from '@/components/ui/button'
+import { PendingAction } from '@/components/ui/pending-action'
 
-export function LinkDialog() {
+interface LinkDialogProps {
+  tags: Tag[]
+}
+
+export function LinkDialog({ tags }: LinkDialogProps) {
+  const [open, setOpen] = useState(false)
+
   return (
-    <Dialog>
+    <Dialog
+      open={open}
+      onOpenChange={setOpen}
+    >
       <DialogTrigger asChild>
         <Button>
           <Plus />
@@ -26,7 +40,9 @@ export function LinkDialog() {
           <DialogTitle>Create new lynk</DialogTitle>
         </DialogHeader>
         <LinkForm
-          actions={
+          tags={tags}
+          onSuccess={() => setOpen(false)}
+          actions={isPending => (
             <DialogFooter>
               <DialogClose asChild>
                 <Button
@@ -36,9 +52,16 @@ export function LinkDialog() {
                   Cancel
                 </Button>
               </DialogClose>
-              <Button type='submit'>Create lynk</Button>
+              <Button type='submit'>
+                <PendingAction
+                  isPending={isPending}
+                  loadingText='Creating...'
+                  normalText='Create a lynk'
+                  icon={<Rocket />}
+                />
+              </Button>
             </DialogFooter>
-          }
+          )}
         />
       </DialogContent>
     </Dialog>
