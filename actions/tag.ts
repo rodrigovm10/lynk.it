@@ -51,13 +51,13 @@ export const deleteTag = async (id: string) => {
 export const retrieveTagById = async (id: string) => {
   const user = await getAuthenticatedUser()
 
-  if (!user) return { success: false, error: 'User is not authenticated' }
+  if (!user) return { error: 'User is not authenticated' }
 
   const supabase = await createClient()
 
-  const { data, error } = await supabase.from('tags').select().eq('id', id).single()
+  const { data: tag, error } = await supabase.from('tags').select().eq('id', id).single()
 
-  if (error) return { success: false, error: error.message }
+  if (error) return { error: error.message }
 
-  return { success: true, data }
+  return { data: tag }
 }

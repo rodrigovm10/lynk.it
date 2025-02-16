@@ -47,9 +47,9 @@ export function LinkForm({ tags, actions, onSuccess }: LinkFormProps) {
   const onSubmit = (data: Lynk) => {
     startTransition(async () => {
       try {
-        const { success, error, data: lynk } = await addLynk(data)
+        const { data: lynk, error } = await addLynk(data)
 
-        if (!success) {
+        if (error) {
           toast.error(error)
           console.log(error)
           return

@@ -1,38 +1,54 @@
 'use server'
 
 import { Lynk } from '@/schemas'
+import { retrieveTagById } from './tag'
 import { revalidatePath } from 'next/cache'
 import { getAuthenticatedUser } from '@/utils/helpers'
 import { createClient } from '@/utils/supabase/server'
-import { retrieveTagById } from './tag'
+import { addTagLynk } from './tag-lynk'
+import { Tag } from '@/types/tags'
 
 export const addLynk = async (lynk: Lynk) => {
   const user = await getAuthenticatedUser()
 
-  if (!user) return { success: false, error: 'User is not authenticated' }
+  if (!user) return { error: 'User is not authenticated' }
 
   const supabase = await createClient()
 
   const tags = await Promise.all(
     lynk.tags?.map(async tag => {
-      const { success, data } = await retrieveTagById(tag.id)
-      if (!success) return data
+      const { data, error } = await retrieveTagById(tag.id)
+      if (data) return data
     }) || []
   )
 
-  console.log(tags)
-
-  const { data, error } = await supabase
+  const { data: lynkCreated, error: lynkError } = await supabase
     .from('lynks')
-    .insert([{ ...lynk, user_id: user.id }])
+    .insert({ link: lynk.link, description: lynk.description, user_id: user.id, lynk: lynk.lynk })
     .select()
     .single()
 
-  if (error) return { success: false, error: error.message }
+  if (lynkError) return { error: lynkError.message }
 
-  console.log(data)
-  console.log(error)
+  const validTags = tags.filter(tag => tag !== undefined) as Tag[]
+  const { error: tagLynkError } = await addTagLynk(validTags, lynkCreated.id)
+
+  if (tagLynkError) return { error: tagLynkError }
 
   revalidatePath('/dashboard/links', 'page')
-  return { success: true }
+  return { data: lynkCreated, error: null }
+}
+
+export const retrieveLynks = async () => {
+  const user = await getAuthenticatedUser()
+
+  if (!user) return { error: 'User is not authenticated' }
+
+  const supabase = await createClient()
+
+  const { data, error } = await supabase.from('lynks').select().eq('user_id', user.id)
+
+  if (error) return { error: error.message }
+
+  return { data }
 }
