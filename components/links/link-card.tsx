@@ -13,7 +13,7 @@ export function LinkCard({ lynk }: LinkCardProps) {
       <CardHeader>
         <div className='flex justify-between'>
           <CardTitle className='text-lg'>/{lynk.lynk}</CardTitle>
-          <ShareLink />
+          <ShareLink lynk={lynk} />
         </div>
         <CardDescription>
           <span className='font-medium'>{lynk.link}</span>

@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Moderustic } from 'next/font/google'
+import {} from 'next/font/google'
 
 import { Toaster } from '@/components/ui/sonner'
 import { Navbar } from '@/components/navbar/navbar'
