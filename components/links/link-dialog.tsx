@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Tag } from '@/types/tags'
-import { Plus, Rocket } from 'lucide-react'
+import { Rocket, Save } from 'lucide-react'
 
 import {
   Dialog,
@@ -16,12 +16,19 @@ import {
 import { LinkForm } from './link-form'
 import { Button } from '@/components/ui/button'
 import { PendingAction } from '@/components/ui/pending-action'
+import { Lynk } from '@/types/lynk'
+import { DialogDescription } from '@radix-ui/react-dialog'
+import { TypographyP } from '../ui/typografy'
 
 interface LinkDialogProps {
-  tags: Tag[]
+  lynk?: Lynk
+  tags?: Tag[]
+  title: string
+  description?: string
+  trigger: React.ReactNode
 }
 
-export function LinkDialog({ tags }: LinkDialogProps) {
+export function LinkDialog({ tags, trigger, title, description, lynk }: LinkDialogProps) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -29,17 +36,18 @@ export function LinkDialog({ tags }: LinkDialogProps) {
       open={open}
       onOpenChange={setOpen}
     >
-      <DialogTrigger asChild>
-        <Button>
-          <Plus />
-          <span className='hidden md:inline-block font-semibold'>Create link</span>
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create new lynk</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
+          {description && (
+            <DialogDescription className='text-neutral-500 font-semibold'>
+              {description}
+            </DialogDescription>
+          )}
         </DialogHeader>
         <LinkForm
+          lynk={lynk}
           tags={tags}
           onSuccess={() => setOpen(false)}
           actions={isPending => (
@@ -55,9 +63,9 @@ export function LinkDialog({ tags }: LinkDialogProps) {
               <Button type='submit'>
                 <PendingAction
                   isPending={isPending}
-                  loadingText='Creating...'
-                  normalText='Create a lynk'
-                  icon={<Rocket />}
+                  loadingText={lynk ? 'Saving...' : 'Creating...'}
+                  normalText={lynk ? 'Save' : 'Create a lynk'}
+                  icon={lynk ? <Save /> : <Rocket />}
                 />
               </Button>
             </DialogFooter>

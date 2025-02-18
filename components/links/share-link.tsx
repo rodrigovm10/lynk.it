@@ -3,7 +3,7 @@
 import { toast } from 'sonner'
 import { Lynk } from '@/types/lynk'
 import { LYNK_TO_COPY } from '@/constants'
-import { Clipboard, CopyIcon, QrCodeIcon, Settings } from 'lucide-react'
+import { Clipboard, CopyIcon, QrCodeIcon } from 'lucide-react'
 
 import {
   DropdownMenu,
@@ -32,7 +32,7 @@ export function ShareLink({ lynk }: ShareLinkProps) {
   }
 
   return (
-    <section>
+    <section className='flex items-center'>
       <Dialog>
         <DropdownMenu>
           <DropdownMenuTrigger className='transition-opacity hover:opacity-75'>
@@ -53,7 +53,6 @@ export function ShareLink({ lynk }: ShareLinkProps) {
         </DropdownMenu>
         <CopyQRCode lynk={lynk} />
       </Dialog>
-      <Settings />
     </section>
   )
 }

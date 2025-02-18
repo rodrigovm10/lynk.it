@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import { TypographyP } from '@/components/ui/typografy'
 
 interface CopyQRCodeProps {
   lynk: Lynk
@@ -21,7 +22,9 @@ export function CopyQRCode({ lynk }: CopyQRCodeProps) {
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Copy QR Code</DialogTitle>
-        <DialogDescription>{lynk?.description}</DialogDescription>
+        <DialogDescription>
+          <TypographyP>{lynk.description}</TypographyP>
+        </DialogDescription>
       </DialogHeader>
       <div className='my-3 flex flex-col items-center justify-center space-y-3 overflow-hidden'>
         <div className='rounded-lg border border-neutral-100 p-2 shadow-md dark:border-neutral-800'>

@@ -1,9 +1,12 @@
 'use client'
 
-import z from 'zod'
-import { useEffect, useState, useTransition } from 'react'
-import { Lynk, LynkSchema } from '@/schemas'
+import { toast } from 'sonner'
+import { Tag } from '@/types/tags'
+import { useTransition } from 'react'
+import { addLynk } from '@/actions/lynk'
 import { useForm } from 'react-hook-form'
+import { Lynk, LynkSchema } from '@/schemas'
+import { Lynk as LynkType } from '@/types/lynk'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -14,36 +17,33 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
-import { Textarea } from '@/components/ui/textarea'
-import { Card, CardContent } from '@/components/ui/card'
-import { NoTagsCreated } from '@/components/tags/no-tags-created'
-import { Tag } from '@/types/tags'
 import { SelectTags } from './select-tags'
-import { XIcon } from 'lucide-react'
-import { toast } from 'sonner'
-import { addLynk } from '@/actions/lynk'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { NoTagsCreated } from '@/components/tags/no-tags-created'
 
 interface LinkFormProps {
-  tags: Tag[]
+  lynk?: LynkType
+  tags?: Tag[]
   onSuccess: () => void
   actions: (isPending: boolean) => React.ReactNode
 }
 
-export function LinkForm({ tags, actions, onSuccess }: LinkFormProps) {
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+export function LinkForm({ tags, lynk, actions, onSuccess }: LinkFormProps) {
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<Lynk>({
     resolver: zodResolver(LynkSchema),
-    defaultValues: {
-      link: '',
-      lynk: '',
-      description: '',
-      tags: [],
-    },
+    defaultValues: lynk
+      ? {
+          lynk: lynk.lynk,
+          link: lynk.link,
+          description: lynk.description ?? undefined,
+          tags: [],
+        }
+      : undefined,
   })
+
   const onSubmit = (data: Lynk) => {
     startTransition(async () => {
       try {
@@ -51,7 +51,6 @@ export function LinkForm({ tags, actions, onSuccess }: LinkFormProps) {
 
         if (error) {
           toast.error(error)
-          console.log(error)
           return
         }
 
@@ -62,25 +61,6 @@ export function LinkForm({ tags, actions, onSuccess }: LinkFormProps) {
         toast.error('Something went wrong, please try again.')
       }
     })
-  }
-
-  useEffect(() => {
-    form.setValue('tags', selectedTags)
-  }, [selectedTags])
-
-  const handleSelectTags = (tagId: string) => {
-    const tagExists = selectedTags.find(tag => tag.id === tagId)
-
-    if (!tagExists) {
-      setSelectedTags(selectedTags => [...selectedTags, tags.find(tag => tag.id === tagId)!])
-      return
-    }
-  }
-
-  const handleRemoveSelectedTag = (tagId: string) => {
-    const newTags = selectedTags.filter(tag => tag.id !== tagId)
-
-    setSelectedTags(newTags)
   }
 
   return (
@@ -143,30 +123,15 @@ export function LinkForm({ tags, actions, onSuccess }: LinkFormProps) {
           )}
         />
 
-        <SelectTags
-          tags={tags}
-          onSelectTags={handleSelectTags}
-        />
-
-        {tags.length === 0 && <NoTagsCreated />}
-        {selectedTags.length > 0 && (
-          <Card>
-            <CardContent className='p-0 flex justify-center h-9 items-center text-base gap-5 py-2 roun'>
-              {selectedTags.map(tag => (
-                <Badge
-                  key={tag.id}
-                  variant='secondary'
-                  className='flex gap-3 items-center'
-                >
-                  {tag.name}
-                  <button onClick={() => handleRemoveSelectedTag(tag.id)}>
-                    <XIcon size={16} />
-                  </button>
-                </Badge>
-              ))}
-            </CardContent>
-          </Card>
+        {tags && tags.length > 0 ? (
+          <SelectTags
+            tags={tags}
+            onChangeTags={selectedTags => form.setValue('tags', selectedTags)}
+          />
+        ) : (
+          <NoTagsCreated />
         )}
+
         {actions(isPending)}
       </form>
     </Form>

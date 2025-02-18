@@ -16,6 +16,7 @@ import {
 import { TagForm } from './tag-form'
 import { Button } from '@/components/ui/button'
 import { PendingAction } from '@/components/ui/pending-action'
+import { TypographyP } from '../ui/typografy'
 
 export function TagDialog() {
   const [open, setOpen] = useState(false)
@@ -38,7 +39,9 @@ export function TagDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create new tag</DialogTitle>
-          <DialogDescription>Create a new tag to organize your links.</DialogDescription>
+          <DialogDescription className='text-neutral-500 font-semibold'>
+            Create a new tag to organize your links.
+          </DialogDescription>
         </DialogHeader>
         <TagForm
           onSuccess={() => setOpen(false)}
