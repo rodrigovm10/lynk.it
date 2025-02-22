@@ -1,9 +1,10 @@
 import { Lynk } from '@/types/lynk'
-import { Pencil, Trash } from 'lucide-react'
+import { Pencil } from 'lucide-react'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ShareLink } from './share-link'
 import { LinkDialog } from './link-dialog'
+import { DeleteLink } from './delete-link'
 
 interface LinkCardProps {
   lynk: Lynk
@@ -28,10 +29,7 @@ export function LinkCard({ lynk }: LinkCardProps) {
                 />
               }
             />
-            <Trash
-              size={16}
-              className='transition-opacity hover:opacity-75 cursor-pointer'
-            />
+            <DeleteLink lynk={lynk} />
           </section>
         </div>
         <CardDescription>

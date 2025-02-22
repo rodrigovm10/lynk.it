@@ -61,6 +61,21 @@ export const editLynk = async (lynk: Lynk) => {
   return { data, error: null }
 }
 
+export const deleteLynk = async (id: string) => {
+  const user = await getAuthenticatedUser()
+
+  if (!user) return { error: 'User is not authenticated' }
+
+  const supabase = await createClient()
+
+  const { error } = await supabase.from('lynks').delete().eq('id', id)
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/dashboard/links', 'page')
+  return { error: null }
+}
+
 export const retrieveLynks = async () => {
   const user = await getAuthenticatedUser()
 

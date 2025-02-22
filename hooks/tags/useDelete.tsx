@@ -3,7 +3,7 @@ import { toast } from 'sonner'
 
 interface UseDeleteProps {
   entityName: string
-  deleteFunction: (id: string) => Promise<{ success: boolean; error?: string }>
+  deleteFunction: (id: string) => Promise<{ error?: string | null }>
 }
 
 export function useDelete({ entityName, deleteFunction }: UseDeleteProps) {
