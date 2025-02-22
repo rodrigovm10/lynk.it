@@ -87,14 +87,13 @@ export function LinkForm({ tags, lynk, actions, onSuccess }: LinkFormProps) {
           )}
         />
 
-        {tags && tags.length > 0 ? (
+        {tags && tags.length > 0 && (
           <SelectTags
             tags={tags}
             onChangeTags={selectedTags => form.setValue('tags', selectedTags)}
           />
-        ) : (
-          <NoTagsCreated />
         )}
+        {tags && tags.length === 0 && <NoTagsCreated />}
 
         {actions(isPending)}
       </form>

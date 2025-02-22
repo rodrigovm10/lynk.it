@@ -12,6 +12,7 @@ const TagLynkSchema = z.object({
 })
 
 export const LynkSchema = z.object({
+  id: z.string().readonly().optional(),
   link: z
     .string()
     .min(1, { message: 'Destination link is required' })

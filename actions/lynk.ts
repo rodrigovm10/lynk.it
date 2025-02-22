@@ -1,12 +1,12 @@
 'use server'
 
 import { Lynk } from '@/schemas'
-import { retrieveTagById } from './tag'
-import { revalidatePath } from 'next/cache'
-import { getAuthenticatedUser } from '@/utils/helpers'
-import { createClient } from '@/utils/supabase/server'
-import { addTagLynk } from './tag-lynk'
 import { Tag } from '@/types/tags'
+import { retrieveTagById } from './tag'
+import { addTagLynk } from './tag-lynk'
+import { revalidatePath } from 'next/cache'
+import { createClient } from '@/utils/supabase/server'
+import { getAuthenticatedUser } from '@/utils/helpers'
 
 export const addLynk = async (lynk: Lynk) => {
   const user = await getAuthenticatedUser()
@@ -45,6 +45,20 @@ export const editLynk = async (lynk: Lynk) => {
   if (!user) return { error: 'User is not authenticated' }
 
   const supabase = await createClient()
+
+  const { id, ...lynkToUpdate } = lynk
+
+  const { data, error } = await supabase
+    .from('lynks')
+    .update({ ...lynkToUpdate })
+    .eq('id', id!)
+    .select()
+    .single()
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/dashboard/links', 'page')
+  return { data, error: null }
 }
 
 export const retrieveLynks = async () => {

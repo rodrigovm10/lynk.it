@@ -2,7 +2,7 @@ import { toast } from 'sonner'
 import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { addLynk } from '@/actions/lynk'
+import { addLynk, editLynk } from '@/actions/lynk'
 import { Lynk, LynkSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -22,14 +22,16 @@ export function useLinkForm({ lynk, onSuccess }: UseLinkFormProps) {
   const onSubmit = (data: Lynk) => {
     startTransition(async () => {
       try {
-        const { data: lynk, error } = await addLynk(data)
+        const { data: lynkResult, error } = await (lynk ? editLynk(data) : addLynk(data))
 
         if (error) {
           toast.error(error)
           return
         }
 
-        toast.success('Lynk created successfully', { description: `Url: ${lynk?.lynk}` })
+        toast.success(lynk ? 'Lynk edited successfully' : 'Lynk created successfully', {
+          description: `Url: ${lynkResult?.lynk}`,
+        })
         form.reset()
         onSuccess()
       } catch (error) {
