@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Lynk } from '@/schemas'
 import { Tag } from '@/types/tags'
 import { Rocket, Save } from 'lucide-react'
 
@@ -12,13 +13,11 @@ import {
   DialogContent,
   DialogFooter,
   DialogClose,
+  DialogDescription,
 } from '@/components/ui/dialog'
 import { LinkForm } from './link-form'
 import { Button } from '@/components/ui/button'
 import { PendingAction } from '@/components/ui/pending-action'
-import { Lynk } from '@/types/lynk'
-import { DialogDescription } from '@radix-ui/react-dialog'
-import { TypographyP } from '../ui/typografy'
 
 interface LinkDialogProps {
   lynk?: Lynk

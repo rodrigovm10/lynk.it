@@ -24,13 +24,13 @@ export function LinkCard({ lynk }: LinkCardProps) {
               trigger={
                 <Pencil
                   size={16}
-                  className='transition-opacity hover:opacity-75'
+                  className='transition-opacity hover:opacity-75 cursor-pointer'
                 />
               }
             />
             <Trash
               size={16}
-              className='transition-opacity hover:opacity-75'
+              className='transition-opacity hover:opacity-75 cursor-pointer'
             />
           </section>
         </div>

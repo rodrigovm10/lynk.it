@@ -39,6 +39,14 @@ export const addLynk = async (lynk: Lynk) => {
   return { data: lynkCreated, error: null }
 }
 
+export const editLynk = async (lynk: Lynk) => {
+  const user = await getAuthenticatedUser()
+
+  if (!user) return { error: 'User is not authenticated' }
+
+  const supabase = await createClient()
+}
+
 export const retrieveLynks = async () => {
   const user = await getAuthenticatedUser()
 

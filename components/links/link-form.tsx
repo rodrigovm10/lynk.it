@@ -1,13 +1,7 @@
 'use client'
 
-import { toast } from 'sonner'
+import { Lynk } from '@/schemas'
 import { Tag } from '@/types/tags'
-import { useTransition } from 'react'
-import { addLynk } from '@/actions/lynk'
-import { useForm } from 'react-hook-form'
-import { Lynk, LynkSchema } from '@/schemas'
-import { Lynk as LynkType } from '@/types/lynk'
-import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
   Form,
@@ -21,47 +15,17 @@ import { SelectTags } from './select-tags'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { NoTagsCreated } from '@/components/tags/no-tags-created'
+import { useLinkForm } from '@/hooks/links/useLinkForm'
 
 interface LinkFormProps {
-  lynk?: LynkType
+  lynk?: Lynk
   tags?: Tag[]
   onSuccess: () => void
   actions: (isPending: boolean) => React.ReactNode
 }
 
 export function LinkForm({ tags, lynk, actions, onSuccess }: LinkFormProps) {
-  const [isPending, startTransition] = useTransition()
-
-  const form = useForm<Lynk>({
-    resolver: zodResolver(LynkSchema),
-    defaultValues: lynk
-      ? {
-          lynk: lynk.lynk,
-          link: lynk.link,
-          description: lynk.description ?? undefined,
-          tags: [],
-        }
-      : undefined,
-  })
-
-  const onSubmit = (data: Lynk) => {
-    startTransition(async () => {
-      try {
-        const { data: lynk, error } = await addLynk(data)
-
-        if (error) {
-          toast.error(error)
-          return
-        }
-
-        toast.success('Lynk created successfully', { description: `Url: ${lynk?.lynk}` })
-        form.reset()
-        onSuccess()
-      } catch (error) {
-        toast.error('Something went wrong, please try again.')
-      }
-    })
-  }
+  const { form, isPending, onSubmit } = useLinkForm({ lynk, onSuccess })
 
   return (
     <Form {...form}>
