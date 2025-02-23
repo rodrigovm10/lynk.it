@@ -1,12 +1,10 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
-import { getAuthenticatedUser } from '@/utils/helpers'
 import { createClient } from '@/utils/supabase/server'
+import { checkIfExists, getAuthenticatedUser, revalidate } from '@/utils/helpers'
 
 export const addTag = async (name: string) => {
   const user = await getAuthenticatedUser()
-
   if (!user) return { error: 'User is not authenticated' }
 
   const supabase = await createClient()
@@ -15,7 +13,7 @@ export const addTag = async (name: string) => {
 
   if (error) return { error: error.message }
 
-  revalidatePath('/dashboard/links', 'page')
+  revalidate()
   return { error: null }
 }
 
@@ -35,8 +33,10 @@ export const retrieveTags = async () => {
 
 export const deleteTag = async (id: string) => {
   const user = await getAuthenticatedUser()
-
   if (!user) return { error: 'User is not authenticated' }
+
+  const exists = await checkIfExists({ database: 'tags', column: 'id', value: id })
+  if (!exists) return { error: 'Tag not found' }
 
   const supabase = await createClient()
 
@@ -44,7 +44,7 @@ export const deleteTag = async (id: string) => {
 
   if (error) return { error: error.message }
 
-  revalidatePath('/dashboard/links', 'page')
+  revalidate()
   return { error: null }
 }
 
@@ -52,6 +52,9 @@ export const retrieveTagById = async (id: string) => {
   const user = await getAuthenticatedUser()
 
   if (!user) return { error: 'User is not authenticated' }
+
+  const exists = await checkIfExists({ database: 'tags', column: 'id', value: id })
+  if (!exists) return { error: 'Tag not found' }
 
   const supabase = await createClient()
 

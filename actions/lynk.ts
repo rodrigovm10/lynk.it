@@ -4,9 +4,8 @@ import { Lynk } from '@/schemas'
 import { Tag } from '@/types/tags'
 import { retrieveTagById } from './tag'
 import { addTagLynk } from './tag-lynk'
-import { revalidatePath } from 'next/cache'
 import { createClient } from '@/utils/supabase/server'
-import { getAuthenticatedUser } from '@/utils/helpers'
+import { checkIfExists, getAuthenticatedUser, revalidate } from '@/utils/helpers'
 
 export const addLynk = async (lynk: Lynk) => {
   const user = await getAuthenticatedUser()
@@ -35,14 +34,16 @@ export const addLynk = async (lynk: Lynk) => {
 
   if (tagLynkError) return { error: tagLynkError }
 
-  revalidatePath('/dashboard/links', 'page')
+  revalidate()
   return { data: lynkCreated, error: null }
 }
 
 export const editLynk = async (lynk: Lynk) => {
   const user = await getAuthenticatedUser()
-
   if (!user) return { error: 'User is not authenticated' }
+
+  const exists = await checkIfExists({ database: 'lynks', column: 'id', value: lynk.id! })
+  if (!exists) return { error: 'Lynk not found' }
 
   const supabase = await createClient()
 
@@ -57,14 +58,16 @@ export const editLynk = async (lynk: Lynk) => {
 
   if (error) return { error: error.message }
 
-  revalidatePath('/dashboard/links', 'page')
+  revalidate()
   return { data, error: null }
 }
 
 export const deleteLynk = async (id: string) => {
   const user = await getAuthenticatedUser()
-
   if (!user) return { error: 'User is not authenticated' }
+
+  const exists = await checkIfExists({ database: 'lynks', column: 'id', value: id })
+  if (!exists) return { error: 'Lynk not found' }
 
   const supabase = await createClient()
 
@@ -72,7 +75,7 @@ export const deleteLynk = async (id: string) => {
 
   if (error) return { error: error.message }
 
-  revalidatePath('/dashboard/links', 'page')
+  revalidate()
   return { error: null }
 }
 
