@@ -16,7 +16,7 @@ export function useLinkForm({ lynk, onSuccess }: UseLinkFormProps) {
 
   const form = useForm<Lynk>({
     resolver: zodResolver(LynkSchema),
-    defaultValues: lynk ? { ...lynk } : undefined,
+    defaultValues: lynk ? { ...lynk } : { lynk: '', description: '', link: '', tags: [] },
   })
 
   const onSubmit = (data: Lynk) => {

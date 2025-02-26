@@ -1,6 +1,6 @@
 export interface Lynk {
   created_at: string
-  description: string | undefined
+  description: string | undefined | null
   id: string
   last_click: string | null
   link: string

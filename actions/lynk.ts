@@ -79,7 +79,7 @@ export const deleteLynk = async (id: string) => {
   return { error: null }
 }
 
-export const retrieveLynks = async () => {
+export const retrieveAllLynks = async () => {
   const user = await getAuthenticatedUser()
 
   if (!user) return { error: 'User is not authenticated' }
@@ -90,5 +90,5 @@ export const retrieveLynks = async () => {
 
   if (error) return { error: error.message }
 
-  return { data }
+  return { data, error: null }
 }

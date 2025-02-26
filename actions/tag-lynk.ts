@@ -17,3 +17,17 @@ export const addTagLynk = async (tags: Tag[], lynkId: string) => {
 
   return { error: null }
 }
+
+export const retrieveTagLynkByLynkId = async (id: string) => {
+  const user = await getAuthenticatedUser()
+
+  if (!user) return { error: 'User is not authenticated' }
+
+  const supabase = await createClient()
+
+  const { data, error } = await supabase.from('lynk_tag').select().eq('lynk_id', id)
+
+  if (error) return { error: error.message }
+
+  return { data, error: null }
+}

@@ -3,11 +3,11 @@ import { Link as LinkIcon } from 'lucide-react'
 
 import { GithubLogo } from '@/components/icons/icons'
 import { ExternalLink } from '@/components/ui/external-link'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 
 export function HeroActions() {
   return (
-    <section className='flex gap-x-5 mt-8'>
+    <section className='flex justify-center gap-x-5 mt-8'>
       <Link
         href='/login'
         className={buttonVariants({

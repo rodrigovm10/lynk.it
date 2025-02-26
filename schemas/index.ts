@@ -18,7 +18,7 @@ export const LynkSchema = z.object({
     .min(1, { message: 'Destination link is required' })
     .url({ message: 'Invalid link.' }),
   lynk: z.string({ required_error: 'Lynk is required.' }).min(1, { message: 'Lynk is required.' }),
-  description: z.string().optional(),
+  description: z.string().optional().nullable(),
   tags: z.array(TagLynkSchema).optional(),
 })
 
