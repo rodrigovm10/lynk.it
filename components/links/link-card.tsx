@@ -9,6 +9,8 @@ import { LinkDialog } from './link-dialog'
 import { DeleteLink } from './delete-link'
 import { Badge } from '@/components/ui/badge'
 import { Tag } from '@/types/tags'
+import { ExternalLink } from '../ui/external-link'
+import { Separator } from '../ui/separator'
 
 interface LinkCardProps {
   lynk: Lynk
@@ -28,14 +30,26 @@ export async function LinkCard({ lynk }: LinkCardProps) {
     month: 'long',
   })
   const year = date.getFullYear()
+
   return (
     <Card>
       <CardHeader className='p-4'>
         <div className='flex justify-between'>
           <CardTitle className='text-lg transition-opacity cursor-pointer hover:opacity-70'>
-            /{lynk.lynk}
+            <ExternalLink href={`/${lynk.lynk}`}>/{lynk.lynk}</ExternalLink>
           </CardTitle>
           <section className='flex items-center gap-3'>
+            {lynk.total_clicks && lynk.total_clicks > 0 && (
+              <Badge
+                variant='outline'
+                className='cursor-default'
+              >
+                {lynk.total_clicks > 1
+                  ? `${lynk.total_clicks} clicks`
+                  : `${lynk.total_clicks}  click`}
+              </Badge>
+            )}
+            <Separator orientation='vertical' />
             <ShareLink lynk={lynk} />
             <LinkDialog
               lynk={lynk}
@@ -58,7 +72,7 @@ export async function LinkCard({ lynk }: LinkCardProps) {
       <CardContent className='flex justify-between px-4'>
         <section className='space-x-2'>
           {tags.length > 0 &&
-            tags?.map((tag: Tag) => (
+            tags?.map(tag => (
               <Badge
                 key={tag?.id}
                 variant='outline'
