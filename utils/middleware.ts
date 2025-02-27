@@ -15,7 +15,7 @@ export const redirectUrl = async (lynk: string): Promise<RedirectUrl> => {
 
     const { data: lynkToRedirect } = await supabase
       .from('lynks')
-      .select('link')
+      .select('link, id, total_clicks, last_click')
       .eq('lynk', lynk)
       .single()
 
@@ -25,10 +25,13 @@ export const redirectUrl = async (lynk: string): Promise<RedirectUrl> => {
 
     await supabase
       .from('lynks')
-      .update({ total_clicks: lynkToRedirect.total_clicks + 1 })
+      .update({ total_clicks: lynkToRedirect.total_clicks! + 1 })
       .eq('id', lynkToRedirect.id)
 
-    await supabase.from('lynks').update({ last_click: new Date() }).eq('id', lynkToRedirect.id)
+    await supabase
+      .from('lynks')
+      .update({ last_click: new Date().toISOString() })
+      .eq('id', lynkToRedirect.id)
 
     return { error: false, message: 'Success', url: lynkToRedirect.link }
   } catch (error) {
