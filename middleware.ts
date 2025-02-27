@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { updateSession } from '@/utils/supabase/middleware'
 import { authRoutes, DEFAULT_LOGIN_REDIRECT_URL, protectedRoutes, publicRoutes } from './routes'
 import { createClient } from '@/utils/supabase/server'
+import { redirectUrl } from './utils/middleware'
 
 export async function middleware(request: NextRequest) {
   // Update session based on cookies and Supabase auth
@@ -17,6 +18,8 @@ export async function middleware(request: NextRequest) {
   const isPublicRoute = publicRoutes.includes(pathname)
   const isAuthRoute = authRoutes.includes(pathname)
 
+  const lynk = pathname.split('/').pop()
+
   if (isPublicRoute) {
     return response
   }
@@ -28,6 +31,23 @@ export async function middleware(request: NextRequest) {
   if (!user && isProtectedRoute) {
     const loginUrl = new URL('/login', request.url)
     return NextResponse.redirect(loginUrl)
+  }
+
+  if (!isPublicRoute && !isProtectedRoute) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const getDataApi = await redirectUrl(lynk!)
+
+    if (getDataApi.redirect404) {
+      console.log('Error - Redirect 404: ', lynk)
+    }
+
+    if (getDataApi.error) {
+      return NextResponse.json({ error: getDataApi.message }, { status: 500 })
+    }
+
+    if (getDataApi.url) {
+      return NextResponse.redirect(new URL(getDataApi.url).toString())
+    }
   }
 
   return response

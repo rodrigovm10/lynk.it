@@ -17,7 +17,7 @@ export function SelectedTagsList({ selectedTags, onRemoveTag }: SelectedTagsProp
           <Badge
             key={tag.id}
             variant='secondary'
-            className='flex gap-3 items-center self-center'
+            className='flex gap-3 items-center self-center  12345678['
           >
             {tag.name}
             <button onClick={() => onRemoveTag(tag.id)}>

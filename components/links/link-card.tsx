@@ -1,14 +1,14 @@
 import { Lynk } from '@/types/lynk'
 import { Pencil } from 'lucide-react'
+import { retrieveTagById } from '@/actions/tag'
+import { retrieveTagLynkByLynkId } from '@/actions/tag-lynk'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ShareLink } from './share-link'
 import { LinkDialog } from './link-dialog'
 import { DeleteLink } from './delete-link'
-import { retrieveTagLynkByLynkId } from '@/actions/tag-lynk'
-import { retrieveTagById } from '@/actions/tag'
-import { LinkTagsList } from './link-tags-list'
-import { Badge } from '../ui/badge'
+import { Badge } from '@/components/ui/badge'
+import { Tag } from '@/types/tags'
 
 interface LinkCardProps {
   lynk: Lynk
@@ -22,12 +22,19 @@ export async function LinkCard({ lynk }: LinkCardProps) {
       return tag
     })
   )
-
+  const date = new Date(lynk.created_at)
+  const formattedDate = date.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'long',
+  })
+  const year = date.getFullYear()
   return (
     <Card>
       <CardHeader className='p-4'>
         <div className='flex justify-between'>
-          <CardTitle className='text-lg'>/{lynk.lynk}</CardTitle>
+          <CardTitle className='text-lg transition-opacity cursor-pointer hover:opacity-70'>
+            /{lynk.lynk}
+          </CardTitle>
           <section className='flex items-center gap-3'>
             <ShareLink lynk={lynk} />
             <LinkDialog
@@ -48,16 +55,22 @@ export async function LinkCard({ lynk }: LinkCardProps) {
           <span className='font-medium'>{lynk.link}</span>
         </CardDescription>
       </CardHeader>
-      <CardContent className='space-x-2 px-4'>
-        {tags.length > 0 &&
-          tags?.map(tag => (
-            <Badge
-              key={tag?.id}
-              variant='outline'
-            >
-              {tag?.name}
-            </Badge>
-          ))}
+      <CardContent className='flex justify-between px-4'>
+        <section className='space-x-2'>
+          {tags.length > 0 &&
+            tags?.map((tag: Tag) => (
+              <Badge
+                key={tag?.id}
+                variant='outline'
+                className='cursor-default'
+              >
+                {tag?.name}
+              </Badge>
+            ))}
+        </section>
+        <section className='text-sm font-mono text-neutral-500 font-semibold'>
+          {formattedDate}, {year}
+        </section>
       </CardContent>
     </Card>
   )
