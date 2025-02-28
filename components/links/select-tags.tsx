@@ -20,10 +20,12 @@ export function SelectTags({ tags, onChangeTags }: SelectTagsProps) {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([])
 
   const handleSelectTags = (tagId: string) => {
-    const tagExists = selectedTags.find(tag => tag.id === tagId)
+    const tagExists = selectedTags.find(tag => tag?.id === tagId)
 
     if (!tagExists) {
-      const newTags = [...selectedTags, tags?.find(tag => tag.id === tagId)!]
+      const newTags = [...selectedTags, tags?.find(tag => tag.id === tagId)].filter(
+        (tag): tag is Tag => tag !== undefined
+      )
       setSelectedTags(newTags)
       onChangeTags(newTags)
     }

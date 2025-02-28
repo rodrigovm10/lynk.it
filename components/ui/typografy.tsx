@@ -54,6 +54,7 @@ export const TypographyH3 = ({
 export const TypographyP = ({ children, className, ref, ...props }: React.ComponentProps<'p'>) => {
   return (
     <p
+      ref={ref}
       className={cn('leading-7 [&:not(:first-child)]:mt-6', className)}
       {...props}
     >

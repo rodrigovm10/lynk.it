@@ -1,9 +1,9 @@
 import { Tag } from '@/types/tags'
-import { Link, Plus, Star, Stars } from 'lucide-react'
+import { Plus, Stars } from 'lucide-react'
 
 import { LinkDialog } from './link-dialog'
 import { Button } from '@/components/ui/button'
-import { TypographyH3 } from '../ui/typografy'
+import { TypographyH3 } from '@/components/ui/typografy'
 
 interface NoLinksFoundProps {
   tags: Tag[]

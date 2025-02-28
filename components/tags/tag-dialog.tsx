@@ -16,7 +16,6 @@ import {
 import { TagForm } from './tag-form'
 import { Button } from '@/components/ui/button'
 import { PendingAction } from '@/components/ui/pending-action'
-import { TypographyP } from '../ui/typografy'
 
 export function TagDialog() {
   const [open, setOpen] = useState(false)
