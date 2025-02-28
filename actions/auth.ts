@@ -6,7 +6,7 @@ import { createClient } from '@/utils/supabase/server'
 const signInWith = async (provider: Provider) => {
   const supabase = await createClient()
 
-  const auth_callback_url = `${process.env.SITE_URL}/auth/callback`
+  const auth_callback_url = `${process.env.NEXT_PUBLIC_API_URL}/auth/callback`
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
