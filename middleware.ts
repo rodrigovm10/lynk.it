@@ -24,6 +24,10 @@ export async function middleware(request: NextRequest) {
     return response
   }
 
+  if (pathname.startsWith('/auth')) {
+    return response // Evita que se maneje como un "lynk"
+  }
+
   if (isAuthRoute && user) {
     return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT_URL, request.url))
   }
@@ -33,7 +37,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  if (!isPublicRoute && !isProtectedRoute) {
+  if (!isPublicRoute && !isProtectedRoute && !isAuthRoute) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const getDataApi = await redirectUrl(lynk!)
 

@@ -34,4 +34,5 @@ export const checkIfExists = async ({ database, column, value }: CheckIfExists) 
   return true
 }
 
-export const revalidate = (path = '/dashboard/links') => revalidatePath(path, 'page')
+export const revalidate = (path = '/dashboard/links', type: 'page' | 'layout' = 'page') =>
+  revalidatePath(path, type)

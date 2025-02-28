@@ -18,6 +18,6 @@ export const deleteAccount = async (id: string) => {
 
   console.log(id)
 
-  revalidate('/')
+  revalidate('/', 'layout')
   return { success: 'Your account was deleted', error: null }
 }
