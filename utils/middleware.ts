@@ -20,7 +20,7 @@ export const redirectUrl = async (lynk: string): Promise<RedirectUrl> => {
       .single()
 
     if (!lynkToRedirect) {
-      return { error: true, message: 'Lynk not found', redirect404: true }
+      return { error: false, message: 'Lynk not found', redirect404: true }
     }
 
     await supabase
@@ -35,7 +35,6 @@ export const redirectUrl = async (lynk: string): Promise<RedirectUrl> => {
 
     return { error: false, message: 'Success', url: lynkToRedirect.link }
   } catch (error) {
-    console.error('Error lynk: ', error)
     return {
       error: true,
       message: 'Something went wrong.',

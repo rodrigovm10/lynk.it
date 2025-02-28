@@ -79,6 +79,7 @@ export function LinkForm({ tags, lynk, actions, onSuccess }: LinkFormProps) {
                 <Textarea
                   id='description'
                   placeholder='Enter a description'
+                  className='resize-none'
                   {...field}
                 />
               </FormControl>
