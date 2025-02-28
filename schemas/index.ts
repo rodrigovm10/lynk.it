@@ -1,4 +1,4 @@
-import z from 'zod'
+import z, { optional } from 'zod'
 
 const TagLynkSchema = z.object({
   created_at: z.string(), // Puedes cambiar a z.date() si quieres validar fechas
@@ -18,7 +18,7 @@ export const LynkSchema = z.object({
     .min(1, { message: 'Destination link is required' })
     .url({ message: 'Invalid link.' }),
   lynk: z.string({ required_error: 'Lynk is required.' }).min(1, { message: 'Lynk is required.' }),
-  description: z.string().optional().nullable(),
+  description: z.string().optional().default(''),
   tags: z.array(TagLynkSchema).optional(),
 })
 

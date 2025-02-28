@@ -1,4 +1,4 @@
-import { Lynk } from '@/types/lynk'
+import { Tables } from '@/types'
 import { Pencil } from 'lucide-react'
 import { retrieveTagById } from '@/actions/tag'
 import { retrieveTagLynkByLynkId } from '@/actions/tag-lynk'
@@ -8,12 +8,11 @@ import { ShareLink } from './share-link'
 import { LinkDialog } from './link-dialog'
 import { DeleteLink } from './delete-link'
 import { Badge } from '@/components/ui/badge'
-import { Tag } from '@/types/tags'
-import { ExternalLink } from '../ui/external-link'
-import { Separator } from '../ui/separator'
+import { Separator } from '@/components/ui/separator'
+import { ExternalLink } from '@/components/ui/external-link'
 
 interface LinkCardProps {
-  lynk: Lynk
+  lynk: Tables<'lynks'>
 }
 
 export async function LinkCard({ lynk }: LinkCardProps) {

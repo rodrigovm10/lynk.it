@@ -1,9 +1,9 @@
+import { retrieveTags } from '@/actions/tag'
 import { retrieveAllLynks } from '@/actions/lynk'
 
 import { LinkList } from '@/components/links/link-list'
 import { LinkActions } from '@/components/links/link-actions'
 import { NoLinksFound } from '@/components/links/no-links-found'
-import { retrieveTags } from '@/actions/tag'
 
 export default async function Links() {
   const [{ data: lynks, error: errorLynk }, { data: tags, error: errorTag }] = await Promise.all([

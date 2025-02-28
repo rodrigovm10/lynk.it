@@ -1,8 +1,8 @@
-import { Lynk } from '@/types/lynk'
+import { Tables } from '@/types'
 import { LinkCard } from './link-card'
 
 interface LinkListProps {
-  lynks: Lynk[]
+  lynks: Tables<'lynks'>[]
 }
 
 export function LinkList({ lynks }: LinkListProps) {

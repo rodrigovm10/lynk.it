@@ -67,7 +67,7 @@ export type Database = {
       lynks: {
         Row: {
           created_at: string
-          description: string | null
+          description: string
           id: string
           last_click: string | null
           link: string
@@ -78,7 +78,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          description?: string | null
+          description?: string
           id?: string
           last_click?: string | null
           link: string
@@ -89,7 +89,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
-          description?: string | null
+          description?: string
           id?: string
           last_click?: string | null
           link?: string

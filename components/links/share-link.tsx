@@ -1,7 +1,7 @@
 'use client'
 
 import { toast } from 'sonner'
-import { Lynk } from '@/types/lynk'
+import { Tables } from '@/types'
 import { LYNK_TO_COPY } from '@/constants'
 import { Clipboard, CopyIcon, QrCodeIcon } from 'lucide-react'
 
@@ -15,7 +15,7 @@ import { CopyQRCode } from './copy-qr-code'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 
 interface ShareLinkProps {
-  lynk: Lynk
+  lynk: Tables<'lynks'>
 }
 
 export function ShareLink({ lynk }: ShareLinkProps) {

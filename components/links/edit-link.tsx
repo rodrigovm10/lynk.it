@@ -1,4 +1,4 @@
-import { Lynk } from '@/types/lynk'
+import { Tables } from '@/types'
 import { Pencil } from 'lucide-react'
 
 import {
@@ -12,7 +12,7 @@ import {
 import { TypographyP } from '@/components/ui/typografy'
 
 interface EditLinkProps {
-  lynk: Lynk
+  lynk: Tables<'lynks'>
 }
 
 export function EditLink({ lynk }: EditLinkProps) {

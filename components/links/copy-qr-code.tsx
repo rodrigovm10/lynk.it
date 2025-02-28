@@ -1,5 +1,5 @@
+import { Tables } from '@/types'
 import QRCode from 'react-qr-code'
-import { Lynk } from '@/types/lynk'
 import { LYNK_TO_COPY } from '@/constants'
 
 import {
@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button'
 import { TypographyP } from '@/components/ui/typografy'
 
 interface CopyQRCodeProps {
-  lynk: Lynk
+  lynk: Tables<'lynks'>
 }
 
 export function CopyQRCode({ lynk }: CopyQRCodeProps) {
