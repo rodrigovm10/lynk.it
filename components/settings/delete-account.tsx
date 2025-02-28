@@ -2,8 +2,9 @@
 
 import { toast } from 'sonner'
 import { useTransition } from 'react'
+import { HeartCrack } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { deleteAccount } from '@/actions/user'
-import { HeartCrack, Loader } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { TypographyP } from '@/components/ui/typografy'
@@ -14,6 +15,7 @@ interface DeleteAccountProps {
 }
 
 export function DeleteAccount({ id }: DeleteAccountProps) {
+  const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
   const handleDeleteAccount = () => {
@@ -23,10 +25,9 @@ export function DeleteAccount({ id }: DeleteAccountProps) {
 
         if (error) {
           toast.error(error)
-          console.log(error)
           return
         }
-
+        router.push('/')
         toast.success(success)
       } catch (error) {
         toast.error('Something went wrong, please try again.')

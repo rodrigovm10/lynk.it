@@ -1,11 +1,11 @@
 'use server'
 
-import { getAuthenticatedUser, revalidate } from '@/utils/helpers'
 import { createClient } from '@supabase/supabase-js'
+import { getAuthenticatedUser, revalidate } from '@/utils/helpers'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY! // Server-side only!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 export const deleteAccount = async (id: string) => {
   const user = await getAuthenticatedUser()
@@ -15,8 +15,6 @@ export const deleteAccount = async (id: string) => {
   const { error } = await supabase.auth.admin.deleteUser(id)
 
   if (error) return { error: error.message }
-
-  console.log(id)
 
   revalidate('/', 'layout')
   return { success: 'Your account was deleted', error: null }

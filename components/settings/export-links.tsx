@@ -19,7 +19,6 @@ export function ExportLinks() {
 
         if (error) {
           toast.error(error)
-          console.log(error)
           return
         }
 
