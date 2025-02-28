@@ -1,8 +1,8 @@
 'use client'
 
-import { Tag } from '@/types/tags'
-import { deleteTag } from '@/actions/tag'
+import { Tables } from '@/types'
 import { XIcon } from 'lucide-react'
+import { deleteTag } from '@/actions/tag'
 import { useDelete } from '@/hooks/tags/useDelete'
 
 import {
@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button'
 import { PendingAction } from '@/components/ui/pending-action'
 
 interface DeleteTagProps {
-  tag: Tag
+  tag: Tables<'tags'>
 }
 
 export function DeleteTag({ tag }: DeleteTagProps) {

@@ -1,9 +1,9 @@
-import { Tag } from '@/types/tags'
+import { Tables } from '@/types'
 
 import { DeleteTag } from './delete-tag'
 
 interface TagCardProps {
-  tag: Tag
+  tag: Tables<'tags'>
 }
 
 export function TagCard({ tag }: TagCardProps) {
