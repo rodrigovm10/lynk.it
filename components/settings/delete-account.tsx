@@ -7,6 +7,7 @@ import { HeartCrack, Loader } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { TypographyP } from '@/components/ui/typografy'
+import { PendingAction } from '@/components/ui/pending-action'
 
 interface DeleteAccountProps {
   id: string | undefined
@@ -42,9 +43,12 @@ export function DeleteAccount({ id }: DeleteAccountProps) {
         onClick={handleDeleteAccount}
         disabled={isPending}
       >
-        {isPending ? <Loader className='animate-spin' /> : <HeartCrack />}
-
-        <span>{isPending ? 'Deleting...' : 'Delete account'}</span>
+        <PendingAction
+          isPending={isPending}
+          loadingText='Deleting...'
+          normalText='Delete account'
+          icon={<HeartCrack />}
+        />
       </Button>
     </section>
   )
