@@ -25,7 +25,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (pathname.startsWith('/auth')) {
-    return response // Evita que se maneje como un "lynk"
+    return response
   }
 
   if (isAuthRoute && user) {
