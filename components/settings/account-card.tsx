@@ -1,10 +1,16 @@
-import { Download, HeartCrack } from 'lucide-react'
+import { Download } from 'lucide-react'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { TypographyP } from '@/components/ui/typografy'
+import { DeleteAccount } from './delete-account'
+import { User } from '@supabase/supabase-js'
 
-export function AccountCard() {
+interface AccountCardProps {
+  user: User | null
+}
+
+export function AccountCard({ user }: AccountCardProps) {
   return (
     <section>
       <Card>
@@ -23,13 +29,7 @@ export function AccountCard() {
               <section className='m-0'>
                 <TypographyP>Delete Account:</TypographyP>
 
-                <Button
-                  variant='destructive'
-                  className='px-4'
-                >
-                  <HeartCrack />
-                  <span>Delete account</span>
-                </Button>
+                <DeleteAccount id={user?.id} />
               </section>
             </div>
           </CardContent>
