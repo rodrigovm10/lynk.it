@@ -1,11 +1,12 @@
 'use client'
 
+import { toast } from 'sonner'
+import { useTransition } from 'react'
+import { deleteAccount } from '@/actions/user'
 import { HeartCrack, Loader } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { deleteAccount } from '@/actions/user'
-import { useTransition } from 'react'
-import { toast } from 'sonner'
+import { TypographyP } from '@/components/ui/typografy'
 
 interface DeleteAccountProps {
   id: string | undefined
@@ -33,15 +34,18 @@ export function DeleteAccount({ id }: DeleteAccountProps) {
   }
 
   return (
-    <Button
-      variant='destructive'
-      className='px-4'
-      onClick={handleDeleteAccount}
-      disabled={isPending}
-    >
-      {isPending ? <Loader className='animate-spin' /> : <HeartCrack />}
+    <section className='m-0'>
+      <TypographyP>Delete Account:</TypographyP>
+      <Button
+        variant='destructive'
+        className='px-4'
+        onClick={handleDeleteAccount}
+        disabled={isPending}
+      >
+        {isPending ? <Loader className='animate-spin' /> : <HeartCrack />}
 
-      <span>{isPending ? 'Deleting...' : 'Delete account'}</span>
-    </Button>
+        <span>{isPending ? 'Deleting...' : 'Delete account'}</span>
+      </Button>
+    </section>
   )
 }

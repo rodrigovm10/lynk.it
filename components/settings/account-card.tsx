@@ -19,18 +19,7 @@ export function AccountCard({ user }: AccountCardProps) {
           <CardDescription className='font-semibold'>Manage your account</CardDescription>
           <CardContent className='p-0'>
             <div className='space-y-7 '>
-              <section>
-                <TypographyP>Export Links:</TypographyP>
-                <Button variant='outline'>
-                  <Download />
-                  <span>Export links</span>
-                </Button>
-              </section>
-              <section className='m-0'>
-                <TypographyP>Delete Account:</TypographyP>
-
-                <DeleteAccount id={user?.id} />
-              </section>
+              <DeleteAccount id={user?.id} />
             </div>
           </CardContent>
         </CardHeader>
