@@ -1,7 +1,6 @@
 'use client'
 
 import { Search } from 'lucide-react'
-import { useDebouncedCallback } from 'use-debounce'
 
 import { Input } from '@/components/ui/input'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'

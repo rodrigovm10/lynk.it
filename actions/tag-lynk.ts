@@ -1,3 +1,5 @@
+'use server'
+
 import { Tag } from '@/types/tags'
 import { getAuthenticatedUser } from '@/utils/helpers'
 import { createClient } from '@/utils/supabase/server'
