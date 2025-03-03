@@ -1,7 +1,7 @@
+'use client'
+
 import { Tables } from '@/types'
 import { Pencil } from 'lucide-react'
-import { retrieveTagById } from '@/actions/tag'
-import { retrieveTagLynkByLynkId } from '@/actions/tag-lynk'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ShareLink } from './share-link'
@@ -10,19 +10,15 @@ import { DeleteLink } from './delete-link'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { ExternalLink } from '@/components/ui/external-link'
+import { useTagsLinks } from '@/hooks/tags/useTagsLinks'
 
 interface LinkCardProps {
   lynk: Tables<'lynks'>
 }
 
-export async function LinkCard({ lynk }: LinkCardProps) {
-  const { data: tagLynks } = await retrieveTagLynkByLynkId(lynk.id)
-  const tags = await Promise.all(
-    tagLynks!.map(async tagLynk => {
-      const { data: tag } = await retrieveTagById(tagLynk.tag_id)
-      return tag
-    })
-  )
+export function LinkCard({ lynk }: LinkCardProps) {
+  const { tags } = useTagsLinks({ lynk })
+
   const date = new Date(lynk.created_at)
   const formattedDate = date.toLocaleDateString('en-GB', {
     day: '2-digit',

@@ -9,7 +9,7 @@ export default function NotFound() {
   return (
     <div className='grid justify-center items-center text-center gap-4 mt-8'>
       <section className='space-y-4'>
-        <TypographyH1 className='text-6xl'>404</TypographyH1>
+        <TypographyH1 className='text-6xl font-mono tracking-wider'>404</TypographyH1>
         <TypographyH2>Page Not Found</TypographyH2>
       </section>
       <section className='flex flex-col gap-4'>
